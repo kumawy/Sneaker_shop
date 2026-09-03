@@ -1,0 +1,7 @@
+# Chapter 18: Widget Testing — golden test tag configuration.
+# This file registers 'golden' as an expected test tag.
+# All testGoldens() calls receive this tag automatically.
+# Run only golden tests:  flutter test --tags golden
+# Skip golden tests:      flutter test --exclude-tags golden
+tags:
+  golden:

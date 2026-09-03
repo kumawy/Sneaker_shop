@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "204562390170",
+    "project_id": "aslan-de6bf",
+    "storage_bucket": "aslan-de6bf.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:204562390170:android:5a2385f8276a6d96579323",
+        "android_client_info": {
+          "package_name": "com.example.sneaker_store"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxznyFetYL2-tIkAH0dTqvfpIBCtGx6LM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
