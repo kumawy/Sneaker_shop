@@ -603,11 +603,11 @@ class _SettingsCard extends StatelessWidget {
     final borderColor = isDark ? AppColors.darkBorder : AppColors.divider;
     final s = strings;
 
-    return Container(
-      decoration: BoxDecoration(
-        border: Border.all(color: borderColor),
+    return Material(
+      color: isDark ? AppColors.darkCard : AppColors.cardBg,
+      shape: RoundedRectangleBorder(
+        side: BorderSide(color: borderColor),
         borderRadius: BorderRadius.circular(18),
-        color: isDark ? AppColors.darkCard : AppColors.cardBg,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

@@ -1,17 +1,161 @@
-# sneaker_store
+<div align="center">
+  <img src="assets/icon/app_icon.png" alt="SneakerStore" width="112" />
+  <h1>SneakerStore</h1>
+  <p>Магазин кроссовок на Flutter: от поиска модели до оформления заказа.</p>
+  <p><strong>Flutter · Firebase · Riverpod · SQLite</strong></p>
+</div>
 
-A new Flutter project.
+## О проекте
 
-## Getting Started
+SneakerStore — учебное приложение магазина с каталогом, корзиной, авторизацией, отзывами и локальной историей заказов. Проект объединяет работу с REST API, облачным Firestore и локальной базой Drift.
 
-This project is a starting point for a Flutter application.
+Оформление заказа демонстрационное: заказ сохраняется на устройстве, реальное списание денег не выполняется.
 
-A few resources to get you started if this is your first Flutter project:
+## Возможности
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+| Раздел | Что доступно |
+| --- | --- |
+| Каталог | Поиск по названию, фильтры по бренду, размеру, цене и рейтингу, сортировка |
+| Карточка товара | Фото, описание, выбор размера и цвета, добавление в корзину |
+| Корзина | Изменение количества, удаление товаров, расчёт суммы |
+| Заказы | Форма оформления, подтверждение и история в SQLite |
+| Избранное | Облачные Favourites в Firestore и отдельный локальный Wishlist |
+| Сравнение | Сопоставление выбранных моделей |
+| Аккаунт | Регистрация и вход по email и паролю через Firebase Auth |
+| Отзывы | Отзывы о товарах и средняя оценка через Firestore |
+| Админ-панель | Добавление, редактирование и скрытие товаров |
+| Настройки | Светлая, тёмная и системная тема; переключение EN / RU / KZ |
+| Демонстрации | Загрузка обуви из DummyJSON API и работа с потоками данных |
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Технологии
+
+- **Flutter / Dart** — интерфейс, анимации и платформенные приложения.
+- **Riverpod + Provider** — зависимости, состояние и подписки на данные.
+- **go_router** — навигация, параметры маршрутов и обработка неизвестных адресов.
+- **Firebase Auth + Cloud Firestore** — аккаунты, избранное, отзывы и изменения каталога.
+- **Drift / SQLite** — локальный Wishlist, заказы и позиции заказов.
+- **SharedPreferences** — настройки и закладки.
+- **HTTP + JSON** — получение и преобразование данных DummyJSON.
+- **Flutter Test, Mockito, Fake Cloud Firestore** — модульные, Firebase и визуальные тесты.
+
+## Быстрый запуск
+
+Проверенная среда: **Flutter 3.44.2**, **Dart 3.12.2**, **Xcode 26.6**, симулятор **iPhone 17 Pro с iOS 26.5**. Для iOS понадобятся macOS, Xcode с установленным симулятором и CocoaPods для текущей конфигурации проекта.
+
+```bash
+git clone https://github.com/kumawy/Sneaker_shop.git
+cd Sneaker_shop
+flutter pub get
+flutter devices
+flutter run
+```
+
+Чтобы выбрать устройство явно, скопируйте его идентификатор из `flutter devices`:
+
+```bash
+flutter run -d <device-id>
+```
+
+### iOS Simulator
+
+Откройте Simulator и запустите приложение:
+
+```bash
+open -a Simulator
+flutter devices
+flutter run -d "iPhone 17 Pro"
+```
+
+Если у вас другая модель симулятора, используйте её имя или идентификатор. Для запуска через Xcode откройте `ios/Runner.xcworkspace`; у схемы **Runner → Run** должна быть конфигурация **Debug**.
+
+### Другие платформы
+
+В репозитории также есть проекты Android, macOS, Windows, Linux и Web. Проверка запуска этой версии выполнена на iOS Simulator.
+
+**Ограничение Web:** подключение Drift в браузере пока отключено. Локальный Wishlist, оформление и история заказов требуют реализации web-хранилища; их следует проверять на нативной платформе.
+
+## Firebase
+
+Конфигурация приложения находится в следующих файлах:
+
+| Платформа | Файл |
+| --- | --- |
+| Dart | `lib/firebase_options.dart` |
+| Android | `android/app/google-services.json` |
+| iOS | `ios/Runner/GoogleService-Info.plist` |
+| macOS | `macos/Runner/GoogleService-Info.plist` |
+
+Для подключения собственного Firebase-проекта обновите соответствующие конфигурации, включите вход **Email/Password** в Authentication и создайте базу **Cloud Firestore**. Доступ к облачным данным зависит от правил Firestore вашего проекта.
+
+Исходный каталог задан в `lib/data/sneaker_data.dart`; изменения из коллекции `products` дополняют его. Список email для отображения админ-панели находится в `lib/models/admin_product_dao.dart`. Эта проверка интерфейса не заменяет правила доступа Firestore.
+
+### Совместимость зависимостей iOS
+
+В `pubspec.yaml` закреплён согласованный набор пакетов:
+
+| Пакет | Версия |
+| --- | --- |
+| `firebase_core` | `4.12.1` |
+| `firebase_auth` | `6.5.6` |
+| `cloud_firestore` | `6.7.1` |
+| Firebase iOS SDK | `12.15.0` |
+
+Обновляйте Firebase-плагины совместно и проверяйте нативную сборку: успешный `flutter analyze` не проверяет компиляцию зависимостей Xcode. Для воспроизводимого запуска сохраняйте `pubspec.lock` в репозитории.
+
+## Структура проекта
+
+```text
+lib/
+├── data/          # Начальный каталог и база Drift
+├── models/        # Модели и DAO для Firebase
+├── network/       # REST-клиент и модели ответов API
+├── providers/     # Состояние, зависимости и потоки данных
+├── router/        # Маршруты приложения
+├── screens/       # Экраны магазина
+├── theme/         # Цвета и темы оформления
+├── widgets/       # Общие компоненты и анимации
+├── firebase_options.dart
+└── main.dart
+
+test/
+├── golden/        # Сравнение виджетов с эталонными изображениями
+├── models/        # Модели, DAO и операции с Fake Firestore
+├── network/       # API-модели и контракт сетевого сервиса
+└── providers/     # Корзина и закладки
+```
+
+## Проверки
+
+```bash
+# Статический анализ
+flutter analyze
+
+# Все тесты
+flutter test
+
+# Только визуальные тесты
+flutter test test/golden
+```
+
+В текущем наборе **108 тестов**. Они проверяют модели, состояние корзины и закладок, операции с Fake Firestore, API-контракты и эталонные изображения виджетов. Firebase-тесты используют локальную имитацию Firestore и не требуют записи в облачную базу.
+
+При намеренном изменении интерфейса эталоны можно пересоздать, после чего следует проверить изображения в `test/golden/goldens/`:
+
+```bash
+flutter test --update-goldens test/golden
+```
+
+После изменения моделей с генерацией кода:
+
+```bash
+dart run build_runner build --delete-conflicting-outputs
+```
+
+## Если запуск не проходит
+
+| Сообщение | Что проверить |
+| --- | --- |
+| `Unable to find a destination matching…` | Симулятор запущен, его ID есть в `flutter devices`, у Runner выбрана конфигурация Debug |
+| Ошибки компиляции Firestore или разрешения SPM-зависимостей | Установлены согласованные Firebase-пакеты из `pubspec.lock`; выполнен `flutter pub get` |
+| `packages have newer versions` | Это уведомление о доступных обновлениях; само по себе оно не блокирует запуск |
+| Предупреждение о CocoaPods и Swift Package Manager | Текущая конфигурация сохраняет CocoaPods-интеграцию; при проверенном запуске предупреждение не мешало сборке |
